@@ -76,8 +76,22 @@ print(type(states))
 
 # %%
 for st in states:
+    print (st)
     StateConfirmed(st)
+    #print(st , StateConfirmed(st))
 
 # NEXT QUESTION
 # Now we see that numbers are not right, so we want to find the number of cases per day. Each day data is yesterday data + new cases , so have to subtract two data frames to find the new cases. However, the first day does not need this!
+# Have to adjust the StateConfirmed ftn to get the correct number and then use the loop tp get it fot all of the states
+# Need to set the initial value as day 1 and then subtract the next day value and keep it as the new value
+# the first date we have is 04-12-2020
+def UpDStateConfirmed (StName):
+    df= pd.read_csv("/Users/shabnam/Documents/DataScienceTest/DataSciencePython/csse_covid_19_daily_reports_us/04-12-2020.csv")
+    sum = df.query('Province_State == "' + str(StName) +'"')['Confirmed'].values[0]
+    for struct in dict_df:
+        WR= dict_df[struct].query('Province_State == "' + str(StName) +'"')
+        sum = sum + WR['Confirmed'].values[0]
+    print(sum)
+df2.set_index('City').subtract(df1.set_index('City')
 
+# %%
