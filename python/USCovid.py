@@ -85,13 +85,33 @@ for st in states:
 # Have to adjust the StateConfirmed ftn to get the correct number and then use the loop tp get it fot all of the states
 # Need to set the initial value as day 1 and then subtract the next day value and keep it as the new value
 # the first date we have is 04-12-2020
+# %%
+# This function takes prints the date and number of new cases per state
 def UpDStateConfirmed (StName):
-    df= pd.read_csv("/Users/shabnam/Documents/DataScienceTest/DataSciencePython/csse_covid_19_daily_reports_us/04-12-2020.csv")
-    sum = df.query('Province_State == "' + str(StName) +'"')['Confirmed'].values[0]
+    df1= pd.read_csv("/Users/shabnam/Documents/DataScienceTest/DataSciencePython/csse_covid_19_daily_reports_us/04-12-2020.csv")
+    sum = df1.query('Province_State == "' + str(StName) +'"')['Confirmed'].values[0]
     for struct in dict_df:
-        WR= dict_df[struct].query('Province_State == "' + str(StName) +'"')
-        sum = sum + WR['Confirmed'].values[0]
-    print(sum)
-df2.set_index('City').subtract(df1.set_index('City')
+        WR= dict_df[struct].query('Province_State == "' + str(StName) +'"')['Confirmed'].values[0]
+        D = dict_df[struct].query('Province_State == "' + str(StName) +'"')['Last_Update'].values[0]
+        D = datetime.datetime.strptime(D, "%Y-%m-%d %H:%M:%S")
+        if D.day-1 == 0 and D.month > 1:
+            D = datetime.date(D.year,D.month-1,30) 
+        elif D.day-1 == 0 and D.month == 1:
+            D = datetime.date(D.year-1,12,30)
+        else:
+            D = datetime.date(D.year,D.month,D.day-1)
+        NCase = WR - sum
+        if NCase <= 0:
+            print(D, "No new case")
+        else:
+            print(D, NCase)
+        sum= sum + NCase
+    
+# %%
+UpDStateConfirmed("South Carolina")     
 
+# %%
+for st in states:
+    print (st)
+    UpDStateConfirmed("' + str(StName) +'")
 # %%
