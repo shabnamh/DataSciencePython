@@ -86,7 +86,8 @@ for st in states:
 # Need to set the initial value as day 1 and then subtract the next day value and keep it as the new value
 # the first date we have is 04-12-2020
 # %%
-# This function takes prints the date and number of new cases per state
+# This function prints the date and number of new cases per state
+# NOTE:Had to modify the date since the logged date is always one day after the actually measured day
 def UpDStateConfirmed (StName):
     df1= pd.read_csv("/Users/shabnam/Documents/DataScienceTest/DataSciencePython/csse_covid_19_daily_reports_us/04-12-2020.csv")
     sum = df1.query('Province_State == "' + str(StName) +'"')['Confirmed'].values[0]
